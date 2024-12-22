@@ -1,8 +1,10 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import base64
 import psycopg2
 
 app = Flask(__name__)
+CORS(app, resources={r"*": {"origins": "*"}})
 
 def get_db_connection():
     conn = psycopg2.connect(
@@ -11,6 +13,15 @@ def get_db_connection():
         user='user',
         password='password'
     )
+    cur = conn.cursor()
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS qr_codes (
+            id SERIAL PRIMARY KEY,
+            image BYTEA NOT NULL
+        )
+    """)
+    conn.commit()
+    cur.close()
     return conn
 
 @app.route('/save_qr', methods=['POST'])
