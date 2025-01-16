@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: qr-code-backend
-        image: your-dockerhub-username/qr-code-backend:latest
+        image: iblamevncnt/qrcode:latest
         ports:
         - containerPort: 5000
 ---
@@ -39,7 +39,7 @@ spec:
         - name: POSTGRES_USER
           value: user
         - name: POSTGRES_PASSWORD
- value: password
+          value: password
         - name: POSTGRES_DB
           value: qrcodes
         ports:
